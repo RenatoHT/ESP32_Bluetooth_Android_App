@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".ControlActivity">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/timeText"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/minutes"
+        android:inputType="number"
+        android:lines="1"
+        android:textColorHint="#78909C"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/showQueue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/showContador"
+        app:layout_constraintTop_toBottomOf="@id/b6"
+        app:layout_constraintVertical_bias="1.0"/>
+
+    <ToggleButton
+        android:id="@+id/b1"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/button_background_color"
+        android:checked="false"
+        android:textColor="#0D47A1"
+        android:textOff="@string/bt1"
+        android:textOn="@string/bt1"
+        app:layout_constraintEnd_toStartOf="@+id/b2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/b2"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/button_background_color"
+        android:checked="false"
+        android:textColor="#0D47A1"
+        android:textOff="@string/bt2"
+        android:textOn="@string/bt2"
+        app:layout_constraintEnd_toStartOf="@+id/b3"
+        app:layout_constraintStart_toEndOf="@+id/b1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/b3"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/button_background_color"
+        android:checked="false"
+        android:textColor="#0D47A1"
+        android:textOff="@string/bt3"
+        android:textOn="@string/bt3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/b2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/b4"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/button_background_color"
+        android:checked="false"
+        android:textColor="#0D47A1"
+        android:textOff="@string/bt4"
+        android:textOn="@string/bt4"
+        app:layout_constraintEnd_toStartOf="@+id/b5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b1" />
+
+    <ToggleButton
+        android:id="@+id/b5"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/button_background_color"
+        android:checked="false"
+        android:textColor="#0D47A1"
+        android:textOff="@string/bt5"
+        android:textOn="@string/bt5"
+        app:layout_constraintEnd_toStartOf="@+id/b6"
+        app:layout_constraintStart_toEndOf="@+id/b4"
+        app:layout_constraintTop_toBottomOf="@id/b2" />
+
+    <ToggleButton
+        android:id="@+id/b6"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/button_background_color"
+        android:checked="false"
+        android:textColor="#0D47A1"
+        android:textOff="@string/bt6"
+        android:textOn="@string/bt6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/b5"
+        app:layout_constraintTop_toBottomOf="@id/b3" />
+
+    <TextView
+        android:id="@+id/showContador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/not_connected"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/showQueue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b4" />
+
+    <TextView
+        android:id="@+id/showQueue"
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/displayQ"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showContador" />
+
+    <Button
+        android:id="@+id/bReset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#393737"
+        android:text="@string/reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bAdd2Q"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#393737"
+        android:text="@string/add_to_queue"
+        app:layout_constraintBottom_toTopOf="@+id/bReset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bExecute"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#393737"
+        android:text="@string/execute"
+        app:layout_constraintBottom_toTopOf="@+id/bAdd2Q"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tLayout1"
+        android:layout_width="368dp"
+        android:layout_height="249dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/bExecute"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showQueue"
+        android:gravity="center_horizontal">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="8" >
+
+            <TextView
+                android:id="@+id/switch1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView
+                android:id="@+id/switch2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="2"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView
+                android:id="@+id/switch3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="3"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/switch4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="4"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView
+                android:id="@+id/switch5"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="5"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView
+                android:id="@+id/switch6"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="6"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView
+                android:id="@+id/timeMin"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:text="Time"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

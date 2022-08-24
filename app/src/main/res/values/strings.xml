@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Controle Bluetooth</string>
+    <string name="bt1">Botão 1</string>
+    <string name="bt2">Botão 2</string>
+    <string name="bt3">Botão 3</string>
+    <string name="bt4">Botão 4</string>
+    <string name="bt5">Botão 5</string>
+    <string name="bt6">Botão 6</string>
+    <string name="displayQ">Queue</string>
+    <string name="not_connected">Not Connected</string>
+    <string name="reset">Reset</string>
+    <string name="add_to_queue">Add to Queue</string>
+    <string name="execute">Execute</string>
+    <string name="minutes">Minutes</string>
+
+</resources>
