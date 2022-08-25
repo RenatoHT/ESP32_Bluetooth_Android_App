@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -19,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.myapplication.databinding.ActivityControlBinding
 import java.io.IOException
 import java.lang.reflect.Method
@@ -168,56 +170,50 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
 
     private fun addTable(int: Int, mutableList :MutableList<ByteArray>) {
         val tLayout = findViewById<TableLayout>(R.id.tLayout1)
-        val tbRow = TableRow(this@ControlActivity)
+        val drawable = ContextCompat.getDrawable(this, R.drawable.divider)
 
-        tbRow.weightSum = 8F
-        tbRow.layoutParams = TableLayout.LayoutParams(tLayout.height, tLayout.width)
+        val qntCol = 7
 
-        val tText1 = TextView(this@ControlActivity)
-        val tText2 = TextView(this@ControlActivity)
+        for (bArray in mutableList) {
+            val tbRow = TableRow(this)
+            tbRow.layoutParams = TableLayout.LayoutParams(tLayout.height, tLayout.width)
+            tbRow.gravity = Gravity.CENTER_HORIZONTAL
+            tbRow.weightSum = 8F
 
-        tText1.text = "ON"
-        tText1.layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-        tText1.gravity = Gravity.CENTER_HORIZONTAL and Gravity.CENTER_VERTICAL
+            var i = 0
 
-        tText2.text = "OFF"
-        tText2.gravity = Gravity.CENTER_HORIZONTAL and Gravity.CENTER_VERTICAL
-        tText2.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+            while (i < qntCol){
+                val tTextList = TextView(this)
 
-        tbRow.addView(tText1)
-        tbRow.addView(tText2)
+                tTextList.gravity = Gravity.CENTER
+                tTextList.textSize = 16f
+                tTextList.background = drawable
 
-        tLayout.addView(tbRow)
-
-
-
-/*        var i = 0
-
-        while(i<int){
-            val tbRow = TableRow(this@ControlActivity)
-            val auxArray: ByteArray = mutableList[i]
-            for(num in auxArray){
-                if (num<100){
-                    if (num%10 == 0){
-                        tText.text = "OFF"
-                        tbRow.addView(tText)
-                    }
-                    else if (num%10 == 1) {
-                        tText.text = "ON"
-                        tbRow.addView(tText)
+                if(bArray[i] < 100) {
+                    tTextList.layoutParams =
+                        TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            1f)
+                    if (bArray[i] % 10 == 0) {
+                        tTextList.text = "OFF"
+                        tTextList.setTextColor(Color.parseColor("#ff0000"))
+                    } else if (bArray[i] % 10 == 1) {
+                        tTextList.text = "ON"
+                        tTextList.setTextColor(Color.parseColor("#8fce00"))
                     }
                 }
+
                 else{
-                    val auxT = num - 100
-                    tText.text = "$auxT"
-                    tbRow.addView(tText)
+                    val tMin = bArray[i] - 100
+                    tTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f)
+                    tTextList.text = "$tMin min"
                 }
+
+                tbRow.addView(tTextList)
+                i++
             }
             tLayout.addView(tbRow)
-            i+=1
         }
-
- */
     }
 
 
