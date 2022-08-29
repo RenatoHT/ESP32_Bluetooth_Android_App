@@ -141,11 +141,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/displayQ"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showContador" />
+        app:layout_constraintTop_toBottomOf="@+id/showContador"
+        app:layout_constraintHorizontal_bias="0"/>
 
     <Button
         android:id="@+id/bReset"
@@ -190,7 +191,6 @@
         android:id="@+id/tLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/divider"
         app:layout_constraintVertical_bias="0.0"
@@ -204,7 +204,18 @@
             android:id="@+id/tableRow1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="8" >
+            android:weightSum="9" >
+
+            <TextView
+                android:id="@+id/iNumber"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"/>
+
 
             <TextView
                 android:id="@+id/switch1"

@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -21,7 +22,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import com.example.myapplication.databinding.ActivityControlBinding
+import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.reflect.Method
 
@@ -137,9 +140,11 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
                             "No command to add",
                             Toast.LENGTH_SHORT).show()
                     }
-                    timeText.text?.clear()
-                    showQueue.text = "Queue\n ${ButtonActivity.displayExeList()}"
-                    addTable(counter, exeList)
+                    else{
+                        timeText.text?.clear()
+                        addTable(counter, exeList)
+                    }
+
                 }
                 else Toast.makeText(this@ControlActivity, "Input time", Toast.LENGTH_SHORT).show()
             }
@@ -168,51 +173,71 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
         btConnection = BtConnection(btAdapter, this)
     }
 
-    private fun addTable(int: Int, mutableList :MutableList<ByteArray>) {
+    private fun addTable(int: Int, muList :MutableList<ByteArray>) {
         val tLayout = findViewById<TableLayout>(R.id.tLayout1)
         val drawable = ContextCompat.getDrawable(this, R.drawable.divider)
 
         val qntCol = 7
+        val bArray = muList[int-1]
 
-        for (bArray in mutableList) {
-            val tbRow = TableRow(this)
-            tbRow.layoutParams = TableLayout.LayoutParams(tLayout.height, tLayout.width)
-            tbRow.gravity = Gravity.CENTER_HORIZONTAL
-            tbRow.weightSum = 8F
+        val tbRow = TableRow(this)
+        tbRow.layoutParams = TableLayout.LayoutParams(tLayout.height, tLayout.width)
+        tbRow.gravity = Gravity.CENTER_HORIZONTAL
+        tbRow.weightSum = 9F
 
-            var i = 0
+        var i = 0
 
-            while (i < qntCol){
-                val tTextList = TextView(this)
+        val indTextList = TextView(this)
+        indTextList.gravity = Gravity.CENTER
+        indTextList.textSize = 16f
+        indTextList.text = (int).toString()
+        indTextList.typeface = Typeface.DEFAULT_BOLD
+        indTextList.background = drawable
+        indTextList.setTextColor(Color.parseColor("#000000"))
+        indTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1f)
+        tbRow.addView(indTextList)
 
-                tTextList.gravity = Gravity.CENTER
-                tTextList.textSize = 16f
-                tTextList.background = drawable
 
-                if(bArray[i] < 100) {
-                    tTextList.layoutParams =
-                        TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            1f)
-                    if (bArray[i] % 10 == 0) {
-                        tTextList.text = "OFF"
-                        tTextList.setTextColor(Color.parseColor("#ff0000"))
-                    } else if (bArray[i] % 10 == 1) {
-                        tTextList.text = "ON"
-                        tTextList.setTextColor(Color.parseColor("#8fce00"))
-                    }
+        while (i < qntCol){
+            val tTextList = TextView(this)
+
+            tTextList.gravity = Gravity.CENTER
+            tTextList.textSize = 16f
+            tTextList.background = drawable
+
+            if(bArray[i] < 100) {
+                tTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1f)
+                if (bArray[i] % 10 == 0) {
+                    tTextList.text = "OFF"
+                    tTextList.setTextColor(Color.parseColor("#ff0000"))
+                } else if (bArray[i] % 10 == 1) {
+                    tTextList.text = "ON"
+                    tTextList.setTextColor(Color.parseColor("#8fce00"))
                 }
-
-                else{
-                    val tMin = bArray[i] - 100
-                    tTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f)
-                    tTextList.text = "$tMin min"
-                }
-
-                tbRow.addView(tTextList)
-                i++
             }
-            tLayout.addView(tbRow)
+
+            else{
+                val tMin = bArray[i].toUByte().toInt() - 100
+                tTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f)
+                tTextList.text = "$tMin min"
+            }
+
+            tbRow.addView(tTextList)
+            i++
+        }
+        tLayout.addView(tbRow)
+    }
+
+    private fun clearTable(){
+        val tLayout = findViewById<TableLayout>(R.id.tLayout1)
+        val sCont = findViewById<TextView>(R.id.showContador)
+        var count = tLayout.childCount
+
+        sCont.text = count.toString()
+
+        while (count > 1) {
+            tLayout.removeViewAt(count-1)
+            count--
         }
     }
 
@@ -225,9 +250,10 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
             b4.isChecked = false
             b5.isChecked = false
             b6.isChecked = false
-
-            showQueue.text = null
+            timeText.text?.clear()
         }
+
+        clearTable()
     }
 
     private fun sendExeList() {
@@ -321,8 +347,21 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
     override fun onReceive(message: String) {
         runOnUiThread{
             if(!listOf("connect", "device").any{ message.contains(it, ignoreCase = true) }) {
-                val message2 = "Contador:$message"
-                binding.showContador.text = message2
+                when (message) {
+                    "99" -> {
+                        binding.showContador.text = "Done"
+                    }
+                    "90" -> {
+                        binding.showContador.text = "Reset"
+                    }
+                    "95" -> {
+                        binding.showContador.text = "Device Busy"
+                    }
+                    else -> {
+                        val message2 = "Executing:$message"
+                        binding.showContador.text = message2
+                    }
+                }
             }
             else binding.showContador.text = message
         }
