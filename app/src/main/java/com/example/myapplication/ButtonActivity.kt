@@ -26,31 +26,17 @@ object ButtonActivity{
         sentence = ""
     }
 
-    fun add2Queue(text: String): Boolean{
-        if (!switches.contentEquals(offStateSwitches) && text.toInt() <= 155 && text.toInt() != 0) {
+    fun add2Queue(text: String): Int{
+
+        return if (!switches.contentEquals(offStateSwitches) && text.toInt() <= 155 && text.toInt() != 0) {
             switches[6] = (text.toInt() + 100).toByte()
             exeList.add(switches.copyOf())
             counter = exeList.size
-            return true
+            2
         }
-        else return false
-    }
-
-    fun displayExeList(): String {
-        for (item in exeList) {
-            if(item.contentEquals(exeList.last())){
-                val strArray = item.map { it.toUByte().toString() }.toTypedArray()
-                for (i in strArray) {
-                    if (sentence.isEmpty() || sentence.endsWith(" ")) {
-                        sentence += i
-                    }
-                    else sentence += "; $i"
-                    }
-
-                sentence+="\n "
-            }
+        else if(!switches.contentEquals(offStateSwitches) && text.toInt() > 155 && text.toInt() != 0) {
+            1
         }
-        return sentence
+        else 0
     }
-
 }

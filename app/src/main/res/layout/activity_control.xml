@@ -120,7 +120,7 @@
 
     <TextView
         android:id="@+id/showContador"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -188,10 +188,9 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TableLayout
-        android:id="@+id/tLayout1"
+        android:id="@+id/tLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/divider"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintBottom_toTopOf="@+id/bExecute"
@@ -200,17 +199,18 @@
         app:layout_constraintTop_toBottomOf="@+id/showQueue"
         android:gravity="center_horizontal">
 
+
         <TableRow
-            android:id="@+id/tableRow1"
+            android:id="@+id/tableRowHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="9" >
+            android:weightSum="8.5" >
 
             <TextView
                 android:id="@+id/iNumber"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="0px"
+                android:layout_weight="0.5"
                 android:text=""
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -220,7 +220,7 @@
             <TextView
                 android:id="@+id/switch1"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="1"
                 android:text="1"
                 android:textSize="16sp"
@@ -230,7 +230,7 @@
             <TextView
                 android:id="@+id/switch2"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="1"
                 android:text="2"
                 android:textSize="16sp"
@@ -239,8 +239,8 @@
 
             <TextView
                 android:id="@+id/switch3"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="3"
@@ -250,7 +250,7 @@
             <TextView
                 android:id="@+id/switch4"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="1"
                 android:text="4"
                 android:textSize="16sp"
@@ -260,7 +260,7 @@
             <TextView
                 android:id="@+id/switch5"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="1"
                 android:text="5"
                 android:textSize="16sp"
@@ -270,7 +270,7 @@
             <TextView
                 android:id="@+id/switch6"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="1"
                 android:text="6"
                 android:textSize="16sp"
@@ -280,14 +280,47 @@
             <TextView
                 android:id="@+id/timeMin"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_weight="2"
                 android:text="Time"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center_vertical|center_horizontal"/>
-
         </TableRow>
     </TableLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/bExecute"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tLayoutHeader"
+        android:gravity="center_horizontal">
+
+        <TableLayout
+            android:id="@+id/tLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/divider"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/bExecute"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/showQueue"
+            android:gravity="center_horizontal">
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="9" >
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

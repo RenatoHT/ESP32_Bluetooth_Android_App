@@ -128,6 +128,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
 
             bReset.setOnClickListener {
                 clearBTN()
+                clearTable()
                 ButtonActivity.reset()
                 if (isBTConnected()) {
                     btConnection.sendMessage(0.to2ByteArray())
@@ -135,16 +136,20 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
             }
             bAdd2Q.setOnClickListener {
                 if(timeText.text!!.isNotEmpty()) {
-                    if (!ButtonActivity.add2Queue(timeText.text.toString())) {
-                        Toast.makeText(this@ControlActivity,
-                            "No command to add",
-                            Toast.LENGTH_SHORT).show()
+                    when (ButtonActivity.add2Queue(timeText.text.toString())) {
+                        0 -> {
+                            Toast.makeText(this@ControlActivity,
+                                "No command to add",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                        1 -> {
+                            Toast.makeText(this@ControlActivity, "Max time allowed 155", Toast.LENGTH_SHORT).show()
+                        }
+                        2 -> {
+                            clearBTN()
+                            addTable(counter, exeList)
+                        }
                     }
-                    else{
-                        timeText.text?.clear()
-                        addTable(counter, exeList)
-                    }
-
                 }
                 else Toast.makeText(this@ControlActivity, "Input time", Toast.LENGTH_SHORT).show()
             }
@@ -183,7 +188,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
         val tbRow = TableRow(this)
         tbRow.layoutParams = TableLayout.LayoutParams(tLayout.height, tLayout.width)
         tbRow.gravity = Gravity.CENTER_HORIZONTAL
-        tbRow.weightSum = 9F
+        tbRow.weightSum = 8.5F
 
         var i = 0
 
@@ -194,7 +199,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
         indTextList.typeface = Typeface.DEFAULT_BOLD
         indTextList.background = drawable
         indTextList.setTextColor(Color.parseColor("#000000"))
-        indTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1f)
+        indTextList.layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.5f)
         tbRow.addView(indTextList)
 
 
@@ -205,8 +210,8 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
             tTextList.textSize = 16f
             tTextList.background = drawable
 
-            if(bArray[i] < 100) {
-                tTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1f)
+            if(bArray[i] in 1..99) {
+                tTextList.layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,1f)
                 if (bArray[i] % 10 == 0) {
                     tTextList.text = "OFF"
                     tTextList.setTextColor(Color.parseColor("#ff0000"))
@@ -218,7 +223,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
 
             else{
                 val tMin = bArray[i].toUByte().toInt() - 100
-                tTextList.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f)
+                tTextList.layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 2f)
                 tTextList.text = "$tMin min"
             }
 
@@ -230,15 +235,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
 
     private fun clearTable(){
         val tLayout = findViewById<TableLayout>(R.id.tLayout1)
-        val sCont = findViewById<TextView>(R.id.showContador)
-        var count = tLayout.childCount
-
-        sCont.text = count.toString()
-
-        while (count > 1) {
-            tLayout.removeViewAt(count-1)
-            count--
-        }
+        tLayout.removeAllViews()
     }
 
 
@@ -252,8 +249,6 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
             b6.isChecked = false
             timeText.text?.clear()
         }
-
-        clearTable()
     }
 
     private fun sendExeList() {
