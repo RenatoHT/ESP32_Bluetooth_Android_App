@@ -28,7 +28,7 @@ object ButtonActivity{
 
     fun add2Queue(text: String): Int{
 
-        return if (!switches.contentEquals(offStateSwitches) && text.toInt() <= 155 && text.toInt() != 0) {
+        return if (switches.slice(0 until switches.size-1) != offStateSwitches.slice(0 until offStateSwitches.size-1) && text.toInt() <= 155 && text.toInt() != 0) {
             switches[6] = (text.toInt() + 100).toByte()
             exeList.add(switches.copyOf())
             counter = exeList.size

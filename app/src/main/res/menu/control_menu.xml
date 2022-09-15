@@ -5,7 +5,7 @@
     <item
         android:id="@+id/id_btButton"
         android:title="BtEnable"
-        android:icon="@drawable/ic_bt_enble"
+        android:icon="@drawable/ic_bt_enabled"
         app:showAsAction="ifRoom"/>
 
     <item

@@ -5,10 +5,11 @@
       <map>
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/divider.xml" value="0.1125" />
+        <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_bt_disable.xml" value="0.1125" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_connect.xml" value="0.1" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_list.xml" value="0.1" />
-        <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_control.xml" value="0.22" />
+        <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_control.xml" value="0.18" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/layout/list_item.xml" value="0.25" />
         <entry key="..\:/Users/R/AndroidStudioProjects/MyApplication/app/src/main/res/layout/test.xml" value="0.25" />

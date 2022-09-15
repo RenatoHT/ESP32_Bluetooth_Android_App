@@ -17,14 +17,13 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import com.example.myapplication.databinding.ActivityControlBinding
-import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.reflect.Method
 
@@ -33,8 +32,17 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
     private lateinit var actListLauncher: ActivityResultLauncher<Intent>
     private lateinit var btConnection: BtConnection
     private var listItem: ListItem? = null
-
+    private lateinit var btMenuItem: MenuItem
     private lateinit var selectedDevice: String
+
+    private val requestBT = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult->
+        if(result.resultCode == RESULT_OK){
+            setBtIcon()
+        }
+        else{
+            btMenuItem.setIcon(R.drawable.ic_bt_disabled)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,8 +179,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
         val btAdapter = btManager.adapter
 
         if(!btAdapter.isEnabled) {
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBtIntent, 1)
+            enableBT()
         }
 
         btConnection = BtConnection(btAdapter, this)
@@ -296,16 +303,20 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.control_menu, menu)
+        btMenuItem = menu!!.findItem(R.id.id_btButton)
+        setBtIcon()
         return super.onCreateOptionsMenu(menu)
     }
 
+    @SuppressLint("MissingPermission")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         if(item.itemId == R.id.id_list) {
             actListLauncher.launch(Intent(this, BtListActivity::class.java))
 
-
         }
         else if(item.itemId == R.id.id_connect) {
+            //Connect/Disconnect Bluetooth Device
             listItem.let { 
                 if (it != null){
                     selectedDevice = it?.name!!
@@ -326,18 +337,52 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
                 else Toast.makeText(this, "No device selected", Toast.LENGTH_SHORT).show()
             }
         }
+        else if (item.itemId == R.id.id_btButton){
+            val btManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+            val btAdapter = btManager.adapter
+
+            if(!btAdapter.isEnabled){
+                enableBT()
+            }
+
+            else {
+                btAdapter.disable()
+                btMenuItem.setIcon(R.drawable.ic_bt_disabled)
+
+            }
+
+        }
 
         return super.onOptionsItemSelected(item)
     }
 
     private fun onBtListResult() {
-        actListLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        //Display list paired Bluetooth devices
+        actListLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
             if(it.resultCode == RESULT_OK) {
                listItem = it.data?.getSerializableExtra(BtListActivity.DEVICE_KEY) as ListItem
+
+                //Connect Bluetooth
+                listItem.let {
+                    if (it != null) {
+                        selectedDevice = it?.name!!
+                        if (!isBTConnected()) {
+                            Toast.makeText(this, "Connecting", Toast.LENGTH_SHORT).show()
+                            btConnection.connect(it.mac)
+                        } else {
+                            try {
+                                btConnection.closeConnection()
+                                Toast.makeText(this, "Disconnecting device", Toast.LENGTH_SHORT).show()
+                            }
+                            catch (e:IOException) {
+                                Toast.makeText(this, "No device connected", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-
 
     override fun onReceive(message: String) {
         runOnUiThread{
@@ -360,5 +405,22 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
             }
             else binding.showContador.text = message
         }
+    }
+
+    private fun setBtIcon(){
+        val btManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val btAdapter = btManager.adapter
+
+        if(!btAdapter.isEnabled){
+            btMenuItem.setIcon(R.drawable.ic_bt_disabled)
+        }
+        else {
+            btMenuItem.setIcon(R.drawable.ic_bt_enabled)
+        }
+    }
+
+    private fun enableBT(){
+        val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        requestBT.launch(enableBtIntent)
     }
 }
