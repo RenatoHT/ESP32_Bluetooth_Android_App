@@ -319,7 +319,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
             //Connect/Disconnect Bluetooth Device
             listItem.let { 
                 if (it != null){
-                    selectedDevice = it?.name!!
+                    selectedDevice = it.name
                     if (!isBTConnected()) {
                         Toast.makeText(this, "Connecting", Toast.LENGTH_SHORT).show()
                         btConnection.connect(it.mac)
@@ -365,7 +365,7 @@ class ControlActivity : AppCompatActivity(), ReceiveThread.Listener {
                 //Connect Bluetooth
                 listItem.let {
                     if (it != null) {
-                        selectedDevice = it?.name!!
+                        selectedDevice = it.name
                         if (!isBTConnected()) {
                             Toast.makeText(this, "Connecting", Toast.LENGTH_SHORT).show()
                             btConnection.connect(it.mac)
